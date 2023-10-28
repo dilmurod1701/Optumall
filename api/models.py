@@ -83,7 +83,7 @@ class Profile(models.Model):
 
 
 class Cart(models.Model):
-    from_user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    from_user = models.ForeignKey(Users, on_delete=models.CASCADE, null=True)
     products = models.CharField(max_length=90)
 
     class Meta:
