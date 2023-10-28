@@ -1,5 +1,5 @@
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, RetrieveAPIView
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework import filters
 from rest_framework.response import Response
@@ -48,3 +48,19 @@ class SearchByTitle(ListAPIView):
     serializer_class = ProductsSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['title']
+
+
+class SeeUserInfo(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, username):
+        user = Users.objects.get(first_name=username)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+
+class UpdateUserInfo(UpdateAPIView):
+    queryset = Users.objects.all()
+    serializer_class = UserSerializer
+    lookup_field = 'username'
+    permission_classes = [IsAuthenticated]
