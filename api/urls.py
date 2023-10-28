@@ -1,14 +1,13 @@
 from django.urls import path
-
-from . import views
-
+from .views import ShowAllProducts, CreateNewProduct, UpdateProductById, DeleteProductById, CategoryProductResultView, SearchProductView, UpdateUserInfo, SeeUserInfo
 
 urlpatterns = [
-    path('products', views.ShowAllProducts.as_view(), name='products'),
-    path('new', views.CreateNewProduct.as_view(), name='new'),
-    path('<int:id>/update', views.UpdateProductById.as_view(), name='update'),
-    path('category/<str:category>', views.Category.as_view(), name='search-with-category'),
-    path('product/<int:id>/delete', views.DeleteProductById.as_view(), name='delete'),
-    path('search?product=<str:title>', views.ProductList.as_view(), name='search'),
+    path('api/products', ShowAllProducts.as_view()),
+    path('api/new', CreateNewProduct.as_view()),
+    path('api/<int:pk>/update', UpdateProductById.as_view()),
+    path('api/category/<str:name>', CategoryProductResultView.as_view()),
+    path('api/search/<str:title>', SearchProductView.as_view()),
+    path('api/delete/<int:id>/cart', DeleteProductById.as_view()),
+    path('api/user/<username>', SeeUserInfo.as_view()),
+    path('api/user/<username>/update', UpdateUserInfo.as_view()),
 ]
-
